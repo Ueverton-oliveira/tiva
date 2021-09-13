@@ -1,2 +1,2 @@
-class Schedule::V1::ScheduleController < ApiController
+class Schedule::V1::ScheduleController < ApplicationController
 end
