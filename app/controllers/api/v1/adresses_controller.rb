@@ -1,4 +1,4 @@
-class Schedule::V1::AdressesController < ApplicationController
+class  Api::V1::AdressesController < ApplicationController
   def index
     @adresses = Address.all
   end
@@ -23,8 +23,8 @@ class Schedule::V1::AdressesController < ApplicationController
   private
 
   def address_params
-    return {} unless params.has_key?(:professional)
-    params.require(:professional).permit(:zip_code, :state, :city, :district, :street, :house_number)
+    return {} unless params.has_key?(:address)
+    params.require(:address).permit(:zip_code, :state, :city, :district, :street, :house_number)
   end
 
   def save_address!
