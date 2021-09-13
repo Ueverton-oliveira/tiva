@@ -3,7 +3,7 @@ Rails.application.routes.draw do
 
   namespace :schedule do
     namespace :v1 do
-      get "professional" => "professionals#index"
+      resources :professionals
     end
   end
 end
