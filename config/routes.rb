@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   namespace :schedule do
     namespace :v1 do
       resources :professionals
+      resources :schedules
     end
   end
 end
