@@ -1,10 +1,9 @@
 require "rails_helper"
 
 describe "Professionals", type: :request do
-  let!(:professionals) { create(:professional) }
+  let!(:professionals) { :professional }
 
   it "returns all Professioanls" do
-    binding.pry
     get '/schedule/v1/professionals'
     expect(body_json['professionals']).to contain_exactly *professionals.as_json(only: %i(id name description email cell_phone))
   end
