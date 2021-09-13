@@ -194,6 +194,7 @@ DEPENDENCIES
   devise
   factory_bot_rails
   faker
+  i18n
   listen (~> 3.2)
   pg (>= 0.18, < 2.0)
   puma (~> 4.1)
