@@ -18,7 +18,7 @@ class Schedule::V1::SchedulesController < ApplicationController
 
   def schedule_params
     return {} unless params.has_key?(:schedule)
-    params.require(:schedule).permit(:initial_date, :end_date, initial_hour, end_hour)
+    params.require(:schedule).permit(:initial_date, :end_date, :initial_hour, :end_hour)
   end
 
   def save_schedule!
