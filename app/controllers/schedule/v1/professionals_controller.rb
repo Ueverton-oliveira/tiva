@@ -1,5 +1,5 @@
 class Schedule::V1::ProfessionalsController < ApplicationController
   def index
-    render json: { message: "Uhul!" }
+    @professionals = Professional.all
   end
 end
