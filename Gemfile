@@ -39,6 +39,7 @@ group :development, :test do
   gem 'rspec-rails', '~> 4.0.1'
   gem 'shoulda-matchers', '~> 4.0'
   gem 'rspec-json_expectations'
+  gem 'pry', '~> 0.13.1'
 end
 
 group :development do
