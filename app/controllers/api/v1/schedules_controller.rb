@@ -4,7 +4,7 @@ class Api::V1::SchedulesController < ApplicationController
   end
 
   def create
-    @schedules = SystemRequirement.new
+    @schedules = Schedule.new
     @schedules.attributes = schedule_params
     save_schedule!
   end
