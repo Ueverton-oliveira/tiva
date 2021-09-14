@@ -1,4 +1,6 @@
 class Api::V1::SchedulesController < ApplicationController
+  include SimpleErrorRenderable
+
   def index
     @schedules = Schedule.all
   end

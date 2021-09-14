@@ -1,4 +1,6 @@
 class  Api::V1::AdressesController < ApplicationController
+  include SimpleErrorRenderable
+
   def index
     @adresses = Address.all
   end
