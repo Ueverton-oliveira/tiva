@@ -1,26 +1,34 @@
 class Api::V1::ProfessionalsController < ApplicationController
+  before_action :load_category, only: [:update, :destroy]
+
+  include SimpleErrorRenderable
+
   def index
     @professionals = Professional.all
   end
 
   def create
-    @professionals = Professional.new
-    @professionals.attributes = professional_params
+    @professional = Professional.new
+    @professional.attributes = professional_params
     save_professional!
   end
 
   def update
-    @professionals.attributes = professional_params
+    @professional.attributes = professional_params
     save_professional!
   end
 
   def destroy
-    @professionals.destroy!
+    @professional.destroy!
   rescue
-    render_error(fields: @professionals.errors.messages)
+    render_error(fields: @professional.errors.messages)
   end
 
   private
+
+  def load_professional
+    @professional = Category.find(params[:id])
+  end
 
   def professional_params
     return {} unless params.has_key?(:professional)
@@ -28,9 +36,9 @@ class Api::V1::ProfessionalsController < ApplicationController
   end
 
   def save_professional!
-    @professionals.save!
+    @professional.save!
     render :show
   rescue
-    render_error(fields: @professionals.errors.messages)
+    render_error(fields: @professional.errors.messages)
   end
 end
