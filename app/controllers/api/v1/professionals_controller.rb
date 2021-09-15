@@ -1,44 +1,49 @@
-class Api::V1::ProfessionalsController < ApplicationController
-  before_action :load_category, only: [:update, :destroy]
+module Api::V1
+  class ProfessionalsController < ApiController
+    before_action :set_professional, only: [:update, :destroy]
 
-  include SimpleErrorRenderable
+    include SimpleErrorRenderable
 
-  def index
-    @professionals = Professional.all
-  end
+    def index
+      @professionals = Professional.all
+    end
 
-  def create
-    @professional = Professional.new
-    @professional.attributes = professional_params
-    save_professional!
-  end
+    def show
+    end
 
-  def update
-    @professional.attributes = professional_params
-    save_professional!
-  end
+    def create
+      @professional = Professional.new
+      @professional.attributes = professional_params
+      save_professional!
+    end
 
-  def destroy
-    @professional.destroy!
-  rescue
-    render_error(fields: @professional.errors.messages)
-  end
+    def update
+      @professional.attributes = professional_params
+      save_professional!
+    end
 
-  private
+    def destroy
+      @professional.destroy!
+    rescue
+      render_error(fields: @professional.errors.messages)
+    end
 
-  def load_professional
-    @professional = Category.find(params[:id])
-  end
+    private
 
-  def professional_params
-    return {} unless params.has_key?(:professional)
-    params.require(:professional).permit(:name, :email, :description, :cell_phone)
-  end
+    def set_professional
+      @professional = Category.find(params[:id])
+    end
 
-  def save_professional!
-    @professional.save!
-    render :show
-  rescue
-    render_error(fields: @professional.errors.messages)
+    def professional_params
+      return {} unless params.has_key?(:professional)
+      params.require(:professional).permit(:name, :email, :description, :cell_phone)
+    end
+
+    def save_professional!
+      @professional.save!
+      render :show
+    rescue
+      render_error(fields: @professional.errors.messages)
+    end
   end
 end

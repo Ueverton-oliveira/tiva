@@ -3,7 +3,8 @@ require "rails_helper"
 describe "Api::V1::Adresses", type: :request do
   context "GET adresses" do
     let(:url) { "/api/v1/adresses" }
-    let!(:adresses) { create(:address) }
+    let!(:professional) { create(:professional) }
+    let(:adresses) { create(:address, professional_id: professional.id) }
 
     it "returns all Adresses" do
       get url, params: adresses, xhr: true
@@ -20,10 +21,12 @@ describe "Api::V1::Adresses", type: :request do
     let(:url) { "/api/v1/adresses"  }
 
     context "with valid params " do
-      let!(:adresses) { create(:address) }
+      let!(:professional) { create(:professional) }
+      let(:adresses) { create(:address, professional_id: professional.id) }
       let(:address_params) { { address: attributes_for(:address) }.to_json }
 
       it 'adds a new Address' do
+        byebug
         expect do
           post url, params: address_params
         end.to change(Address, :count).by(1)
@@ -31,8 +34,8 @@ describe "Api::V1::Adresses", type: :request do
 
       it 'returns last added Address' do
         post url, params: address_params
-        expected_category = Address.last.as_json(only: %i(zip_code state city district street house_number))
-        expect(body_json['adresses']).to eq expected_category
+        expected_address = Address.last.as_json(only: %i(zip_code state city district street house_number))
+        expect(body_json['adresses']).to eq expected_address
       end
 
       it 'returns success status' do
@@ -66,7 +69,7 @@ describe "Api::V1::Adresses", type: :request do
 
   context "PACHT /adresses/:id" do
     let(:address) { create(:address) }
-    let(:url) { "/api/v1/professionals/#{adresses.id}" }
+    let(:url) { "/api/v1/adresses/#{adresses.id}" }
 
     context "with valid paramns" do
       let(:zip_code) { '79280-000' }
@@ -81,8 +84,8 @@ describe "Api::V1::Adresses", type: :request do
       it 'retuns update Professional' do
         patch url, params: address_params
         address.reload
-        expect_category = address.as_json(only: %i(zip_code state city district street house_number))
-        expect(body_json['address']).to eq expect_category
+        expected_address = address.as_json(only: %i(zip_code state city district street house_number))
+        expect(body_json['address']).to eq expected_address
       end
     end
 

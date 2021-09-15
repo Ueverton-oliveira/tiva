@@ -69,7 +69,7 @@ describe "Api::V1::Schedules", type: :request do
     let(:url) { "/api/v1/schedules/#{shedules.id}" }
 
     context "with valid paramns" do
-      let(:initial_date) { 15/09/2021 }
+      let(:initial_date) { '15/09/2021' }
       let(:schedule_params) { { schedule: {initial_date: initial_date}}.to_json}
 
       it 'update Schedule' do
@@ -82,7 +82,7 @@ describe "Api::V1::Schedules", type: :request do
         patch url, params: schedule_params
         address.reload
         expect_category = schedule.as_json(only: %i(initial_date end_date initial_hour end_hour))
-        expect(body_json['schedule']).to eq expect_category
+        expect(body_json['api']).to eq expect_category
       end
     end
 
