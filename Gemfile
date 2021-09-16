@@ -30,6 +30,8 @@ gem 'devise'
 gem 'i18n'
 # Rendering
 gem 'jbuilder', '~> 2.10.1'
+#Serializer
+gem 'active_model_serializers', '~> 0.10.2'
 
 
 group :development, :test do
@@ -40,7 +42,7 @@ group :development, :test do
   gem 'rspec-rails', '~> 4.0.1'
   gem 'shoulda-matchers', '~> 4.0'
   gem 'rspec-json_expectations'
-  gem 'pry', '~> 0.13.1'
+  gem 'pry-rails'
 end
 
 group :development do

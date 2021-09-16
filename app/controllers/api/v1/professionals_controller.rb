@@ -1,25 +1,32 @@
 module Api::V1
   class ProfessionalsController < ApiController
-    before_action :set_professional, only: [:update, :destroy]
-
-    include SimpleErrorRenderable
+    before_action :set_professional, only: [:show, :update, :destroy]
 
     def index
       @professionals = Professional.all
+
+      render json: @professionals
     end
 
     def show
+      render json: @professional, include: [:shedules, :address]
     end
 
     def create
-      @professional = Professional.new
-      @professional.attributes = professional_params
-      save_professional!
+      @professional = Professional.new(professional_params)
+      if @professional.save
+        render json: @professional, include: [:shedules, :address], status: :created, location: @professional
+      else
+        render json: @professional.errors, status: :unprocessable_entity
+      end
     end
 
     def update
-      @professional.attributes = professional_params
-      save_professional!
+      if @professional.update(professional_params)
+        render json: @professional, include: [:shedules, :address]
+      else
+        render json: @contact.errors, status: :unprocessable_entity
+      end
     end
 
     def destroy
@@ -35,15 +42,7 @@ module Api::V1
     end
 
     def professional_params
-      return {} unless params.has_key?(:professional)
-      params.require(:professional).permit(:name, :email, :description, :cell_phone)
-    end
-
-    def save_professional!
-      @professional.save!
-      render :show
-    rescue
-      render_error(fields: @professional.errors.messages)
+      ActiveModelSerializers::Deserialization.jsonapi_parse(params)
     end
   end
 end
