@@ -6,9 +6,11 @@ Rails.application.routes.draw do
       resources :professionals
       resources :schedules do
         resource :professional, only: [:show]
+        resource :professional, only: [:show], path: 'relationships/professional'
       end
       resources :adresses do
         resource :professional, only: [:show]
+        resource :professional, only: [:show], path: 'relationships/professional'
       end
     end
   end

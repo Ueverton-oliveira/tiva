@@ -6,8 +6,8 @@ module Api::V1
     end
 
     def create
-      @adresses = Address.new
-      @adresses.attributes = address_params
+      @address = Address.new
+      @address.attributes = address_params
       save_address!
     end
 
@@ -15,20 +15,25 @@ module Api::V1
     end
 
     def update
-      @adresses.attributes = address_params
+      @address.attributes = address_params
       save_address!
     end
 
     def destroy
-      @adresses.destroy!
+      @address.destroy!
     rescue
-      render_error(fields: @adresses.errors.messages)
+      render_error(fields: @address.errors.messages)
     end
 
     private
 
     def set_address
-      @professional = Category.find(params[:id])
+      if params[:professional_id]
+        @address = Professional.find(params[:contact_id]).address
+        return @address
+      end
+
+      @address = Address.find(params[:id])
     end
 
     def address_params
@@ -37,10 +42,10 @@ module Api::V1
     end
 
     def save_address!
-      @adresses.save!
+      @address.save!
       render :show
     rescue
-      render_error(fields: @adresses.errors.messages)
+      render_error(fields: @address.errors.messages)
     end
   end
 end
